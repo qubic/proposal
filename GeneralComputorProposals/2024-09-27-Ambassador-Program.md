@@ -1,7 +1,7 @@
 # Budget Request to CCF
 
 ## Proposal
-Request to fund the pilot Ambassador Program with 18k USD (8Bln QUBIC)
+Request to fund the pilot Ambassador Program with 18k USD (8Bln QUBIC). Talentnodes will be the escrow for this 8Bln.
 
 ### Available Options:
 > Option 0: No, I don’t want
