@@ -11,6 +11,8 @@ Sample use cases:
 - Request to allow a new SC
 - Extend protocol features
 
+[more info](general-computor-proposal-how-to.md)
+
 ## Computor Donation proposal
 This proposal is used to ask the Computors for a relative donation to what they earn per epoch.
 
@@ -19,13 +21,19 @@ Sample use cases:
 - Ask to fund the CCF
 - Ask to donate a long term project
 
+[more info](general-computor-proposal-how-to.md)
 
 ## Shareholder proposal
+> [!NOTE]
+> This type of proposal is yet not enabled
+
 A shareholder proposal is used to ask the shareholders of smart contracts for their votings.
 
 Sample use cases:
 - Adjust fees of a SC
 - Change revenue address of a SC
+
+[more info](general-computor-proposal-how-to.md)
 
 ## CCF Funding Request
 If you have a project idea and want that the Qubic ecosystem fund (CCF) will help you to build it, then, this is the right place.
@@ -35,4 +43,5 @@ Sample use cases:
 - Company X want's to integrate Qubic in their wallet
 - The Grants program needs funds for their grants
 
+[more info](ccf-funding-request.md)
 
