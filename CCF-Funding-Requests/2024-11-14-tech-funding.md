@@ -1,7 +1,7 @@
-# !DRAFT! Proposal to Fund the Development of the Qubic Core
+# Proposal to Fund the Development of the Qubic Core
 
 ## Proposal
-Send 180 billion QUBIC (roughly 288'000 USD @1600$/bln) to the address `YYY` to support the further development of Qubic Core.
+Send 180 billion QUBIC (roughly 288'000 USD @1600$/bln) to the identity `XQCLNHCEHTKQZDBAHJFVVTRMWFACMAZOBAEDQHEITGGEWZDIBRAIYWPGEONG` to support the further development of Qubic Core.
 
 > Option 0: no
 
