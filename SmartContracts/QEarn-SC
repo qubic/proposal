@@ -1,0 +1,39 @@
+Proposal to include QEarn Smart Contract
+
+Proposal
+Allow QEarn Smart Contract to be deployed on Qubic. 
+QEarn is a new locking Smart Contract designed to incentivize long-term holding of QU tokens by offering a flexible but attractive yield. By allowing users to lock their QU tokens for defined periods (<=52 weeks).
+It will not generate any revenue for shareholders.
+
+Available Options
+Option 0: no, dont allow
+Option 1: yes, allow
+Option 2: Abstain
+
+Funding:
+To establish QEarn and ensure a sustainable source of rewards, we propose the following funding structure:
+1.	Reallocate 50 Billion QU from Weekly Emissions:
+    Each week, 50 billion QU tokens will be redirected from the existing weekly emissions
+2.	Repurpose 50 Billion QU from the Planned Burn:
+    In addition to the emissions reallocation, we propose redirecting 50 billion QU from the 150 billion tokens currently scheduled for burning each week.
+3.	Total Weekly Reward Pool:
+    This combined reallocation of 100 billion QU per week will serve as the reward pool for QEarn, available for distribution among QU holders who lock their tokens for the full 52-week period.
+
+Technical Implementations
+-	Every epoche there is a new initial QEarn locking round 
+-	User can lock from minimum 10million QU to maximum 1 Trilion QU per address
+-	At epoche transition, locking round will be closed and locking period starts.
+  No more users can lock in this round. Only unlocking possible with penalty according to table below.
+-	APY is calculated by amount lock / reward pot(100B)
+
+Find Pullrequest to Core code including SC code here:
+https://github.com/qubic/core/pull/154/files#diff-884c2eb9b7f96d8331c0671697e4d70d6046f5b2d7a529a3eb2390ebd6ca23ae
+
+For more information on the proposal see link below:
+https://docs.google.com/document/d/1B219WdjJo66OHE3YUhyzKjfVOjMeJHDyZQ4xDL52n1k
+
+For more info on the general concept of QEarn see link to the blogpost:
+https://medium.com/@cryptopion33r/qearn-the-path-to-high-yields-and-reduced-qubic-supply-21fecf5d3c32
+
+
+
