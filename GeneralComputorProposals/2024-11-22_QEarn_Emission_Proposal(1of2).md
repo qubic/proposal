@@ -4,8 +4,8 @@
 We propose to adjust the weekly emission burn rate from currently 15% to 10%. The purpose of this change is to increase token allocation for QEarn and balance the weight between emissions and the burn rate.
 
 ## Available Options  
->Option 0**: Yes, allow  
->Option 1**: No  
+>Option 0: Yes, allow  
+>Option 1: No  
 
 ## Impact  
 
