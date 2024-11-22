@@ -10,7 +10,7 @@ We propose to adjust the weekly emission burn rate from currently 15% to 10%. Th
 ## Impact  
 
 - **Burn Rate Adjustment**:  
-  Reducing the burn rate to 10% would lower the weekly burn from 150B to 100B QU tokens based on a 1000B weekly emission.  
+  Reducing the burn rate to 10% would lower the weekly burn from 150B to 100B `$QUBIC` based on a 1000B weekly emission.  
 
 - **Increased Allocations**:  
   This adjustment frees up approximately 50B QU tokens per week, which can be redirected to QEarn to strengthen the economy sustainably.  
