@@ -4,8 +4,8 @@
 This proposal requests an allocation of approximately 100B QU tokens from the adjusted weekly emissions (after Burn adjustment) to fund QEarn. This allocation supports the recently approved QEarn smart contract and ensures sufficient rewards to make QEarn one of the most attractive locking/staking offers in the market.
 
 ## Available Options  
->Option 0**: Yes, allow  
->Option 1**: No  
+>Option 0: Yes, allow  
+>Option 1: No  
 
 ## Rationale  
 With the reduction in the burn rate from 15% to 10%, as proposed in Proposal (1/2), approximately 50B QU tokens will become available for reallocation. Additionally, the system will adjust the reward structure to provide the remaining portion of the approximately 100B QU from emissions, ensuring the necessary funding for QEarn.
