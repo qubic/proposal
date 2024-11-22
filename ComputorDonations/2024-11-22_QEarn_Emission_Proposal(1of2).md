@@ -5,6 +5,7 @@ We propose to adjust the weekly emission burn rate from currently 15% to 10%. Th
 
 ## Available Options  
 >Option 0: No
+
 >Option 1: Yes, allow 
  
 Here you find the [Second Part of the QEarn proposal](2024-11-22_QEarn_Emission_Proposal(2of2).md) to reallocate the freed up `$QUBIC` to the QEarn SC
