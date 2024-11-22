@@ -18,7 +18,7 @@ With the reduction in the burn rate from 15% to 10%, as proposed in Proposal (1/
 - *Arbitrator (approx. 2%):* 1000B - 2% = ~980B  
 - *Burn Adjustment (10%):* 980B - 10% = ~882B  
 - *Computor Controlled Funds (CCF) 8%:* 882B – 8% = ~811.44B  
-- *QEarn Allocation (Approx. 12.25% - ~46B from burn (5.63%) and ~54B from emission (6.615%)):* 811.44B – 12.25% =  ~712B
+- *QEarn Allocation (Approx. 12.25% - ~46B from burn (5.63%) and ~54B from emission (6.615%)):* ~811.44B – ~12.25% =  ~712B
 
 This ensures that approximately 100B `$QUBIC` are available weekly to fund QEarn.
 
