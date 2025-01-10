@@ -21,17 +21,8 @@ Additional needed actions for Computors to validate QEarn SC state will be poste
 > Option 1: yes, allow
 
 ## Code change
+For detailled code changes see the pull request below:
+https://github.com/qubic/core/pull/273
 
-```c++
-struct StatsInfo {
-
-        uint64 burnedAmount;
-        uint64 boostedAmount;
-        uint64 rewardedAmount;
-
-    };
-
-    array<StatsInfo, QEARN_MAX_EPOCHS> statsInfo;
-```
 
 
