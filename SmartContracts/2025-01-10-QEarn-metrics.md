@@ -9,12 +9,6 @@ Allow to add following variables for tracking additional metrics directly in the
 
 This way we ensure that the full set of metrics is directly calculated and stored in the SC and can be used and displayed wherever needed.
 
-## Available Options
-> Option 0: no, dont allow
-
-> Option 1: yes, allow
-
-
 ##SC state change
 This change requires a state change of the QEarn SC.
 Additional actions for Computors will be posted in the #Computor-Operators channel in discord.
@@ -33,4 +27,10 @@ struct StatsInfo {
 
     array<StatsInfo, QEARN_MAX_EPOCHS> statsInfo;
 ```
+
+## Available Options
+> Option 0: no, dont allow
+
+> Option 1: yes, allow
+
 
