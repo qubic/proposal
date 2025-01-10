@@ -14,11 +14,13 @@ This way we ensure that the full set of metrics is directly calculated and store
 
 > Option 1: yes, allow
 
-#SC state change
+
+##SC state change
 This change requires a state change of the QEarn SC.
 Additional actions for Computors will be posted in the #Computor-Operators channel in discord.
+
  
-#Code change
+##Code change
 
 ```c++
 struct StatsInfo {
