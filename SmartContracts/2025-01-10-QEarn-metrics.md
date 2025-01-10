@@ -13,7 +13,7 @@ This way we ensure that the full set of metrics is directly calculated and store
 
 ## SC state change
 This change requires a state change of the QEarn SC.
-Additional actions for Computors will be posted in the #Computor-Operators channel in discord.
+Additional needed actions for Computors to validate QEarn SC state will be posted in the #Computor-Operators channel in discord.
 
 ## Available Options
 > Option 0: no, dont allow
