@@ -4,7 +4,9 @@
 Allow to add following variables for tracking additional metrics directly in the QEarn Smart Contract to ensure full transparency on epoche level:
 
 >burnedAmount
+
 >boostedAmount
+
 >rewardedAmount
 
 This way we ensure that the full set of metrics is directly calculated and stored in the SC and can be used and displayed wherever needed.
