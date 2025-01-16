@@ -32,7 +32,7 @@ As part of this new governance framework the QCB will implement a robust escalat
 
 We welcome Community Managements attempts to solve conflicts with the community internally, but we feel the need of external counseling when it comes to team decision like banning or muting community members based on personal opinions. 
 
-We additionally plan to fully separate moderation and administration from Community Management and the QCS, the QCB will launch a public community fund in parts supported by CCF to pay the salary of the moderation team in order to ensure that the moderation team stays as independent and neutral, allowing them to operate without bias or influence from any single entity. Administration can only remain in the hands of those project members that need discord access to pursue their mandates.  
+We additionally plan to fully separate moderation and administration from Community Management and the QCS, the QCB will launch a public community fund in parts supported by CCF to pay the salary of the moderation team in order to ensure that the moderation team stays as independent and neutral, allowing them to operate without bias or influence from any single entity. Administration can only remain in the hands of those project members that need discord access to pursue their mandates.
 
 As for specific ways of how to govern what and where to act how the QCB will as any other project or body ask the Quorum individually.
 
@@ -42,7 +42,7 @@ We look forward to this new chapter with optimism, believing that these changes 
 - Qubic Community Board members will be passionate Qubic advocates from around the globe to help the community to grow trust in Qubic and its leading structures that lately have been decimated and concentrated
 - QCB will gather information about the ongoing developments of all official Qubic channels like QCS, QCT, Grants, CCF and many yet to come. 
 - QCB will analyze the gathered data and information in order to give the community an independent look behind the curtains to answer questions before they arise.
-- QSC will further audit the financial situation and appropriate usage of funds as well as review milestones set by the workgroups and projects for receipt of perpetual funding
+- QCB will further audit the financial situation and appropriate usage of funds as well as review milestones set by the workgroups and projects for receipt of perpetual funding
 - In case of inconsistencies or decisions of large magnitude the QCB can halt processes and ask for Quorum votes to make sure that the Quorum will stay ahead of the curve
 
 ### What are the expected outcomes?
@@ -53,3 +53,4 @@ We look forward to this new chapter with optimism, believing that these changes 
 - Strengthen the community overall as there is an entity members can call if there are any misunderstandings or disagreement
 - No added costs, QCB members will not receive any salary
 - Possibility for QCB members to be part of the planned Associations advisory board
+
