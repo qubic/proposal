@@ -1,45 +1,51 @@
-# Budget Request to CCF
+# Proposal of Qubic Community Board (QCB)
 
 ## Proposal
-Request to fund the pilot Ambassador Program with 18k USD (8Bln QUBIC). Talentnodes will be the escrow for this 8Bln.
+Proposal to create a governing and auditing body of community members to support and endorse the growing Qubic ecosystem and to help the community to shed a light into happenings behind the scenes
 
 ### Available Options:
 > Option 0: No, I don’t want
 
-> Option 1: Yes, give 8BLN QUBIC to fund Ambassador Program
+> Option 1: Yes, I want the Qubic Community Board to be created
 
 ## Details
-The Qubic Ambassador Program is a global initiative aimed at building local communities passionate about Qubic’s decentralised solutions. Qubican’s (ambassadors) will lead on expanding Qubic’s global reach by organising local events, educating local communities, and contributing to the growth of the ecosystem by completing tasks and bounties. In order to build the right infrastructure and create incentives for talent to join the program, we’re proposing a request to fund the ambassador program with 8Bln QUBIC.
+Dear Community
 
-### What will Qubic Ambassadors do
-- Qubic Ambassadors (Qubicans) are passionate individuals from around the globe to help grow Qubic. There are four distinct types of ambassador roles, each contributing to the ecosystem in a unique way:
-- Qubican Community Leaders – Lead and organise local meetups, conferences, workshops, and virtual events to engage and expand Qubic's presence in your area.
-- Qubican Content Creators – Create educational materials such as videos, blog posts, and social media content to raise awareness about Qubic and its decentralised solutions.
-- Qubican Developers – Contribute to Qubic’s technical ecosystem by assisting in development, writing code, and supporting open-source projects.
-- Qubican Community Participants – Assist with community management, translations, outreach, and engagement activities to ensure Qubic’s message reaches new audiences and is effectively communicated.
+As Qubic moves on with huge steps, the SteCo has renamed themselves to Qubic Core Services (QCS), Development in form of Qubic Core Tech (QCT) has already segregated from QCS, the QCS plans to have an Association in Switzerland, huge sums of Qu have been transferred to QCS and to QCT and also huge sums are planned to be sent to the new Board members of the Association which partly also are paid QCS members, many Quorum and community members are left with open questions.
+To answer at least some of those questions from an independent point of view we hereby propose the Qubic Community Board (QCB). It will consist of community members that have been Qubic advocates for a long period of time, who have no direct operational roles within the ecosystem but possess a deep understanding of Qubic’s mission and community needs. 
+This board will serve as an independent oversight body, guiding Qubic’s governance, auditing finances, reviewing the actions of the team members, evaluating the overall development and observing basically all official Qubic service and development entities. 
+To support balanced governance, the QCB will have the authority to veto significant decisions and call for Quorum votes to solve those matters of substantial impact.
+The QCB will have no active role in any decision making processes within projects, services and workgroups but will take on governance roles, providing independent oversight and auditing and will also create strategies that ensure a fair handling of all situations that could emerge when projects are in competition or new projects need funding so that all decisions are made for the best of Qubic.
+The QSC will transition its governance activities to the QCB and will focus on its current operational roles, including workgroup leadership, project management and services. The QCB itself will be the long arm of the Quorum, it will inform the community regularly and will attend at meetings of the different projects and services on a regular basis to get a deeper understanding of the challenges while also ensuring balanced and structured governance and oversight models as Qubic continues to expand. 
+The proposed QCB will consist of seven members: three elected by the Quorum, three by the Community, and one Chair elected by the QCB members themselves. We also want to see one or more by Quorum elected QCB members being part of the Associations Advisory Board. 
+The QCB will initiate a process of continuous self reflection and observation to understand its lacks and its benefits, form strategies how its own and others actions can be evaluated, create visions for further Qubic expansion and try to keep healthy growth oriented governance. 
+As part of this new governance framework the QCB will implement a robust escalation process outside of QCB and QCS. The escalation process will be held in 3 rounds where different trusted community members selected by QCB will have interviews with the persons/projects questioning decisions of all kinds, work out solutions and prevent possible conflicts of interest.
+We welcome Community Managements attempts to solve conflicts with the community internally, but we feel the need of external counseling when it comes to team decision like banning or muting community members based on personal opinions. 
+We additionally plan to fully separate moderation and administration from Community Management and the QCS, the QCB will launch a public community fund in parts supported by CCF to pay the salary of the moderation team in order to ensure that the moderation team stays as independent and neutral, allowing them to operate without bias or influence from any single entity. Administration can only remain in the hands of those project members that need discord access to pursue their mandates.  
 
-Qubicans will play an important role in bringing more holders and developers to the Qubic ecosystem while also educating existing community members. 
+
+We look forward to this new chapter with optimism, believing that these changes will create a balanced framework for Qubic’s sustainable and collaborative growth.
+
+
+With gratitude,
+
+
+Lex
+
+
+
+### What will Qubic Community Board do
+- Qubic Community Board members will be passionate Qubic advocates from around the globe to help the community to grow trust in Qubic and its leading structures that have been massively decimated and concentrated sin
+- QSC will gather information about the ongoing developments of all official Qubic channels like QCS, QCT, Grants, CCF and many more yet to come. 
+- QSC will analyze the gathered data and information in order to give the community an independent look behind the curtains to answer questions before they arise.
+- QSC will further audit the financial situation and appropriate usage of funds as well as review milestones set by the workgroups and projects for receipt of perpetual funding
+- In case of inconsistencies or decisions of large magnitude the QSC can halt processes and ask for Quorum votes to make sure that the Quorum will stay ahead of the curve
 
 ### What are the expected outcomes?
-- Support Qubic team with completing small impactful tasks such as code reviews, small design tasks, content writing, event planning (meetups, AMA’s and hackathons) and local community management. Some tasks will be linked directly to the bounty program
-- Increased brand awareness and engagement within the crypto community
-- Higher user and developer adoption of the Qubic ecosystem
-- Growth in community-driven projects and initiatives
-- Strengthened local communities with dedicated chapter leads
-
-**Success Indicators**
-- Number of ambassadors and local chapters established
-- Number of tasks completed by ambassador program
-- Number of developers onboarded into hackathons
-- Number of community-driven projects initiated
-
-### Review
-We will review the first cohort (October - December) and continue if successful. 
-
-### How will we spend the funds?
-The requested funds are aimed to fuel the following initiatives within the Ambassador Program:
-- Engagement activities like Zealy to creating campaigns and leadership boards
-- Exclusive PFP’s for ambassador program that have shown proven impact
-- Qubic Ambassador Reward Pool. **All Qubic ambassadors are expected to show proof of work before the actual payout. The payout are validated and overseen by the Qubic Team**
-
- 
+- Quorum will be able to gather an independent view of the projects and workgroups moving forward 
+- Community will get information from community members observations in addition to project leads promotions
+- Trusted processes to deescalate situations going in the wrong direction
+- Making sure that opinion based banning and muting will be reviewed by multiple from leading structures separated community members
+- Strengthen the community overall as there is an entity members can call if there are any misunderstandings or disagreement
+- No added costs, QSC members will not get any salary
+- Possibility for QSC members to be part of the planned Associations advisory board
