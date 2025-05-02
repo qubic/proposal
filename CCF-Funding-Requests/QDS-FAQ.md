@@ -176,3 +176,126 @@ Q. There's a mention in your proposal you want to handle exchanges listings and 
 
 A. It is not a desire to handle them in general however through recent relationships this team has the ability to potentially deliver this.  In the past I have seen an issue where multiple teams trying to accomplish this stalled an exchange listing for Qubic.  If I can deliver on this that is the goal ... I would not be out actively seeking to list but if the opportunity arises bring it to Qubic.  However the power of professional relationships helps make this happen and handing it off at times can damage that, I am not going to cite examples here but we know it happens.
 
+### Follow on questions from 4/28-29
+
+Q. one q came to mind: did you think about fee/burn economics in the bridge, already? As you know Qubic is special in this regard and I wonder what model you plan to use.
+
+A. We were considering the Vottun model tbh … we want to ensure consistency across the community while at the same time using fees that we know voters are comfortable with.
+
+Q. Can you explain that model?
+
+A. The Qubic Token Bridge implements a transfer fee mechanism to cover operational costs and incentivize operators.
+
+Base transfer fee: The base fee is configured by the Admin and is expressed in basis points (1 basis point = 0.01%).
+
+Operator fee percentage: For each token transfer transaction (execute, confirm, revert), the operator can opt to receive the full fee or a part of it, allowing for fair compensation for their role in the transaction. It is expressed as a percentage of the base fee (no decimal places).
+
+The final fee is deducted from the transfer amount as follows:
+
+transfer_fee = transfer_amount * base_fee/10000 * operator_fee/100 (rounded up)
+final_amount = transfer_amount - transfer_fee
+
+The deducted fee is transferred to the recipient designated by the operator for that transaction, allowing for separate storage of funds.
+That is how Vottun does it in their solidity contract on Arb.
+It’s set by admin in this method but is specified by a range of 0 to 10000 basis points:
+
+function setBaseFee(uint256 _baseFee) external onlyRole(DEFAULT_ADMIN_ROLE) {
+        if (_baseFee > 100 * 100) {
+            revert InvalidBaseFee();
+        }
+        baseFee = _baseFee;
+        emit BaseFeeUpdated(_baseFee);
+    }
+
+Personally I would lean towards a fixed base fee. 
+Which might be better from a transparency perspective.
+
+Q. While being in crypto for quite long I barely used bridges (security concern), therefore my understanding is limited:
+
+There is code on both sides:
+Qubic (which needs and SC)
+Solana (also an SC or smth called differently)
+
+I assume also fees are created on both sides?
+bridge from QUBIC to Solana --> fees in Solana
+bridge from Solana to QUBIC --> fees in QUBIC
+
+A. state.transactionFee = 1000;
+Yes there is a transaction fee
+
+Q. To clarify my question about IDE is not Qubic related:
+
+you list:
+User Authentication Flow using Multifactor Auth for security
+GitHub Authentication support
+IDE Development and easy loading capabilities
+GitHub Integration for Code Push & PR Creation
+Draft Saving & Recovery
+
+this are all features i would expect from every IDE. It's not Qubic related. A deliverable for me for Qubic would e.g. be The autocomplete suggets automatically the functions available via QPI or The IDE creates automatically a summary if an SC is conform with the SC Guidelines/Rules of Qubic
+
+A. Yes the intent is to take existing and future SCs and add them to the IDE baseline via administrative function and autocomplete on the public and protected (in the case of inheritence) methods and structs provided in the contract.  In the IDE mockup the Utilities dropdown would allow direct selection of the methods of each contract while autopopulating the necessary structs for things like input, output & local.
+
+Q. Some things i do not agree or i'm missing based on your proposal, the discussions and the Q&A:
+Building an IDE from scratch is imho an unneeded investment
+I personally do not know any developer who uses a Web IDE for real work
+
+A. Remix and Openzepplin are changing how development is done specifically for blockchain.  Why liimit yourself to having maintain a local environment when the blockchain is easily accessible from anywhere?  For example I have two laptops and have to update my dev environment on both for things like foundry and hardhat as new solidity versions roll out, if I use remix that problem is gone.  In the enterprise world the reason to have segmentation of your dev environment is protection of IP or in the case of my early roles at Lockheed security.  This barrier to entry is no longer a thing, why not have an IDE that you can access openly from any machine allowing you to quickly develop and prototype an SC or application?
+
+Q. f you have made an MVP for Qubic i cannot understand how an SQL query like select date_trunc(day, block_timestamp) as date, case when succeeded then 'Succeeded' else 'Failed' end as status, count(*) as N_Transactions from solana.core.fact_transactions where block_timestamp > current_ate - 60 group by 1,2 came into the mockup. This Query is clearly not Qubic related and that is the reason why i asked if you use an existing product and adapt it for Qubic. (btw. this Question was not answered)
+
+A. This was my fault I used the wrong images, the images provided were from initial mockups used to build the MVP.  You can access the MVP here:  
+
+Use queries like this and watch the table update, also note query speed on this subset of sample data in text field top right:
+https://qubic-indexer-explorer.vercel.app/
+
+SELECT * FROM transactions where amount < 7
+SELECT * FROM transactions where amount > 100
+
+Q. "Establish new development paradigms and drive use of testnet and mainnet." what would be those new development paradigms?
+
+A. This is about allowing development from anywhere via web based IDE and integration with github and in a follow on proposal adding support for things like testnet and mainnet.  Our development process could become more streamlined and BTW build into the IDE the ability to directly submit a proposal downstream giving you a one stop shop to do what is needed to see a contract from start to finish.  Reducing developer friction and ramp up time to learn all the steps will help bring in more talent and allowing them to have a faster impact as the IDE is developed and futures are added.  The goal is to make building an initial contract all the way to deployment more seemless.
+
+Q. The mentioned payment/salary numbers do not completely match, but i understand that you calculate with a rising price.
+
+A. The request was for 143 billion at $1400 per billion or $200K.  Breaking down the salary distro goes as follows:
+$50K per month for 3 months to cover AR Data 15 person staff -> $150K
+$3K per month for project lead (could be me or someone else) -> $9K
+$10K per month for Jay King for salary and expenses -> $30K
+
+The remaining $11K was earmarked for 12 months of infra to support all developed projects and other expenses.  That rounds out to $200K
+It should also be noted that 120 discipline specific hours are also being given to the network gratis on top of this, which could roll up to 360 total hours of free time across dev, gtm and bd.
+
+Q. Imho one of the core functions/deliverables for the IDE project should be somehow the availability of Debugging/Test
+
+A. Planned for future, due to the nature of Qubic this is a difficult lift but something on the roadmap.
+
+Q. I'm missing focus. the three projects could all be realized on their own. no need to put them together. maybe i miss some synergies.
+
+A. Again this is about truncating the schedule and bringing them to market prior to halving and subsequent bull run.  If done in serial you turn a 3 month schedule into a 9 month schedule and miss your window.  This is structured with the purpose of taking advantage of what we see as a bullish second half of the year.
+
+Q. As you were NA representative : were the 3 projects part of your plan and what you would have brought to qubic?
+
+A. The IDE was something I brougth up when I first joined back in Oct of last year Joetom and Alberto can confirm this.  The smart indexer came along as an idea when we were dealing with storing the data for RPC during a conversation with Luk he wanted a solution that could allow queries of this manner.  This was a topic of conversation with Functionland and identified as a need.  We will be able to not only allow the queiries he desired but have a backend archival solution that is highly durable and available built in.  For those curious you can also run functionland on your own and be paid for provisioned storage creating a small alternative revenue stream.  The bridge was ideated our of a conversation with a few community members and has even been discussed in discord channels.  A solana bridge also gives us rapid access into the US market where we lack exchange access.
+
+Q. then why you think it requires to create new Group that have the same functionality  as  existing group ? what this new group will be able to avoid  from the previous position you had?
+
+A. As stated above this is not an analgous function it is a complimentary function.  GTM is different than marketing and ecosystem is a complimentary function to what we are building for the reasons stated above.
+
+Q. I have worked within a decentralized structure for many years ...mainly in inverted pyramid model . The concept of creating any working group is the need of certain service that governing bodies (comps in our case) can't conduct as it requires a certain kind of professionalism that might not be available. as the groups been created consequently, it's delegated the authority to make decisions within it's borders with accountability for sure on those decisions hence in our case what I see that the decision of creating a group that has similar function of existing group belongs to the same existing group not Comps as it's falling under existing group decision making border and for budget Comps has to approve it for sure but in the larger sense of the main group. so how I see is that  QDS is a subcommittee from the current Ecosystem group, and it should fall under its jurisdiction not to be created as peer-to-peer working group!
+
+A. Comps still have to have a significant role in this ... smart contracts still need approval.  We are not a subcommittee to ecosystem in any way shape or form as our business model is inherently different with different goals.
+
+Q. The idea of self-sustainability is really great but again as Comps created that groups to further the success of the project, there are responsibility that falls under Comps to provide the funds required & guidance all the time ,, your approach of working groups investing in Qearn  or  whatever to get yields and sustain themselves looks good from outside  but when yields become massive then we will start having problems IMO and it will divert working groups from their main purpose, working group should focus mainly on it's purpose that created for therefor it should not be bothered  actually about finance ( I know it's not the case in qubic as every 2-3 months you have to get approval on funding - which I believe it should be changed in more efficient  way to make sure no work group will be put on pause due to this)
+
+A. This is literally a problem with a network as a whole.  The difference is where the accountability lies for managing the financials as we strive for independence from the CCF.  The CCF should be used to fuel business innovation, incubating projects is great but funds do run out as we burn and more are locked.  The main purpose of the group is to properly manage budget over time so they decrease the need for funding and allow the CCF to fund other initiatives.  If an independent entity dies it doesn't impact the network in its entirety however if you bleed the CCF too quickly it will.
+
+
+
+
+
+
+
+
+
+
