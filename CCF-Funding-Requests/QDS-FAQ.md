@@ -290,6 +290,15 @@ Q. The idea of self-sustainability is really great but again as Comps created th
 
 A. This is literally a problem with a network as a whole.  The difference is where the accountability lies for managing the financials as we strive for independence from the CCF.  The CCF should be used to fuel business innovation, incubating projects is great but funds do run out as we burn and more are locked.  The main purpose of the group is to properly manage budget over time so they decrease the need for funding and allow the CCF to fund other initiatives.  If an independent entity dies it doesn't impact the network in its entirety however if you bleed the CCF too quickly it will.
 
+Tech Stack:
+
+Tech Stack: 
+JS/TS for frontend
+JS/Go backend for middleware using qubic-js
+Rust for Solana Smart Contract
+ES for indexing data from the qubic to a postgresDB
+PostgresDB with timescale plugin extension
+
 
 
 
