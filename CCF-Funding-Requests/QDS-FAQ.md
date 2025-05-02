@@ -292,7 +292,6 @@ A. This is literally a problem with a network as a whole.  The difference is whe
 
 Tech Stack:
 
-Tech Stack: 
 JS/TS for frontend
 JS/Go backend for middleware using qubic-js
 Rust for Solana Smart Contract
