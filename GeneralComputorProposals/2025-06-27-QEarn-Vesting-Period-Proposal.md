@@ -12,10 +12,8 @@ Should the QEarn smart contract be updated to include the proposed vesting perio
 
 ### Available Options:
 
-
 > Option 0: NO – Retain current status
 > Option 1: YES – Implement vesting delay based on lock duration  
-
 
 ## Context
 
@@ -43,7 +41,7 @@ Additional points:
 
 - **Final reward share is calculated based on when vesting ends**, not when the unlock request is made.
 - **Keeping funds locked beyond vesting has no additional reward impact.**
-- **This change will affect all locked funds in QEarn! - locked and newly locked**
+- **This change will affect all locked funds in QEarn! - New and running locking rounds will be affected by that change**
 
 ---
 
