@@ -12,6 +12,7 @@ Should the QEarn smart contract be updated to include the proposed vesting perio
 
 ### Available Options:
 
+
 > Option 0: NO – Retain current status
 > Option 1: YES – Implement vesting delay based on lock duration  
 
