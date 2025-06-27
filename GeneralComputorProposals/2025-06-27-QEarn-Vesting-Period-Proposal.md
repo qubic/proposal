@@ -8,7 +8,7 @@ The goal is to prevent short-term manipulation of yield dynamics and ensure a mo
 ---
 
 ## Decision to Quorum
-Should the QEarn smart contract be updated to include the proposed vesting period logic after unlock requests, as described above?
+Should the QEarn smart contract be updated to include the proposed vesting period logic after unlock requests, as described in this proposal?
 
 ### Available Options:
 
@@ -20,8 +20,8 @@ Should the QEarn smart contract be updated to include the proposed vesting perio
 
 QEarn was introduced to reduce the circulating supply of $QUBIC by incentivizing long-term locking through a weekly staking pool model. While the model is functioning as intended on a technical level, recent behavior has revealed imbalances:
 
-- Some users are locking large amounts of $QUBIC, then just exit shortly after, undermining the reward system.
-- The ability to unlock immediately (with penalty) has allowed speculative participants to treat QEarn as a short-term farm, rather than a commitment mechanism.
+- Some users are locking large amounts of $QUBIC, then just exit shortly after locking round start, undermining the reward system.
+- The ability to unlock immediately has allowed speculative participants to treat QEarn as a short-term farm, rather than a commitment mechanism.
 
 Community feedback has pointed out that this creates an unfair ecosystem and destabilizes weekly yield expectations. This proposal introduces a **post-unlock vesting period** as a mitigation strategy.
 
