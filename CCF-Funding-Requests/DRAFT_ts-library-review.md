@@ -70,10 +70,10 @@ As these libraries become more widely integrated across applications, a security
 
 ## 5. Deliverables
 
-| Deliverable                                  | Description                                                                | Responsible Party     |
-|---------------------------------------------|-----------------------------------------------------------------------------|------------------------|
-| Security Audit Report                        | Technical report with severity-ranked findings and recommendations         | Security Company       |
-| Code Fixes / Remediation Patches (Optional)  | Implementation of suggested security fixes                                 | Qubic Developers       |
-| Post-Audit Q&A / Verification Support        | Answer questions and confirm remediations post-fix                         | Security Company       |
-| Public Audit Publication (Markdown/PDF)      | Public release of the final report, if approved                            | Qubic Developers + Security Company) |
+| Deliverable                                 | Description                                                        | Responsible Party                   |
+| ------------------------------------------- | ------------------------------------------------------------------ | ----------------------------------- |
+| Security Audit Report                       | Technical report with severity-ranked findings and recommendations | Security Company                    |
+| Code Fixes / Remediation Patches (Optional) | Implementation of suggested security fixes                         | Qubic Developers                    |
+| Post-Audit Q&A / Verification Support       | Answer questions and confirm remediations post-fix                 | Security Company                    |
+| Public Audit Publication (Markdown/PDF)     | Public release of the final report, if approved                    | Qubic Developers + Security Company |
 
