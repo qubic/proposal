@@ -46,8 +46,6 @@ Random Lottery (RL) is a simple raffle contract that sells one ticket per accoun
 ## Technical Implementation
 
 ```C++
-#pragma once
-
 /**
  * @file RandomLottery.h
  * @brief Random Lottery contract definition: state, data structures, and user / internal procedures.
@@ -62,10 +60,10 @@ Random Lottery (RL) is a simple raffle contract that sells one ticket per accoun
 using namespace QPI;
 
 // Maximum number of players allowed in the lottery.
-constexpr uint16 MAX_NUMBER_OF_PLAYERS = 1024;
+constexpr uint16 RL_MAX_NUMBER_OF_PLAYERS = 1024;
 
 /// Maximum number of winners kept in the on-chain winners history buffer.
-constexpr uint16 MAX_NUMBER_OF_WINNERS_IN_HISTORY = 1024;
+constexpr uint16 RL_MAX_NUMBER_OF_WINNERS_IN_HISTORY = 1024;
 
 /**
  * @brief Developer address for the RandomLottery contract.
@@ -151,13 +149,14 @@ public:
     };
 
     struct GetPlayers_output {
-        Array<id, MAX_NUMBER_OF_PLAYERS> players;
+        Array<id, RL_MAX_NUMBER_OF_PLAYERS> players;
         uint16 numberOfPlayers = 0;
         uint8 returnCode = static_cast<uint8>(EReturnCode::SUCCESS);
     };
 
     struct GetPlayers_locals {
         uint64 arrayIndex = 0;
+        sint32 i = 0;
     };
 
     /**
@@ -192,13 +191,15 @@ public:
 
     struct GetWinner_locals {
         uint64 randomNum = 0;
+        sint32 i = 0;
+        sint32 j = 0;
     };
 
     struct GetWinners_input {
     };
 
     struct GetWinners_output {
-        Array<WinnerInfo, MAX_NUMBER_OF_WINNERS_IN_HISTORY> winners;
+        Array<WinnerInfo, RL_MAX_NUMBER_OF_WINNERS_IN_HISTORY> winners;
         uint64 numberOfWinners = 0;
         uint8 returnCode = static_cast<uint8>(EReturnCode::SUCCESS);
     };
@@ -219,6 +220,8 @@ public:
 
         uint64 revenue = 0;
         Entity entity;
+
+        sint32 i = 0;
     };
 
 public:
@@ -272,9 +275,9 @@ public:
 
         // Single-player edge case: refund instead of drawing.
         if (state.players.population() == 1) {
-            for (sint32 i = 0; i < state.players.capacity(); ++i) {
-                if (!state.players.isEmptySlot(i)) {
-                    qpi.transfer(state.players.key(i), state.ticketPrice);
+            for (locals.i = 0; locals.i < state.players.capacity(); ++locals.i) {
+                if (!state.players.isEmptySlot(locals.i)) {
+                    qpi.transfer(state.players.key(locals.i), state.ticketPrice);
                     break;
                 }
             }
@@ -290,24 +293,26 @@ public:
                 locals.winnerAmount = div<uint64>(locals.revenue * state.winnerFeePercent, 100ULL);
                 locals.teamFee = div<uint64>(locals.revenue * state.teamFeePercent, 100ULL);
                 locals.distributionFee = div<uint64>(locals.revenue * state.distributionFeePercent, 100ULL);
+                locals.burnedAmount = div<uint64>(locals.revenue * state.burnPrecent, 100ULL);
 
                 // Team fee
                 if (locals.teamFee > 0) {
                     qpi.transfer(state.teamAddress, locals.teamFee);
                 }
+
                 // Distribution fee
                 if (locals.distributionFee > 0) {
                     qpi.distributeDividends(div<uint64>(locals.distributionFee, uint64(NUMBER_OF_COMPUTORS)));
                 }
+
                 // Winner payout
                 if (locals.winnerAmount > 0) {
                     qpi.transfer(locals.getWinnerOutput.winnerAddress, locals.winnerAmount);
                 }
 
-                // Burn all residual (handles rounding dust).
+                // Burn remainder
+                if (locals.burnedAmount > 0)
                 {
-                    qpi.getEntity(SELF, locals.entity);
-                    locals.burnedAmount = locals.entity.incomingAmount - locals.entity.outgoingAmount;
                     qpi.burn(locals.burnedAmount);
                 }
 
@@ -342,9 +347,10 @@ public:
         if (output.numberOfPlayers == 0) {
             return;
         }
-        for (sint64 i = 0; i < state.players.capacity(); ++i) {
-            if (!state.players.isEmptySlot(i)) {
-                output.players.set(locals.arrayIndex++, state.players.key(i));
+        locals.i = 0;
+        for (locals.i = 0; locals.i < state.players.capacity(); ++locals.i) {
+            if (!state.players.isEmptySlot(locals.i)) {
+                output.players.set(locals.arrayIndex++, state.players.key(locals.i));
             }
         }
     }
@@ -400,7 +406,7 @@ private:
         if (input.winnerAddress == id::zero()) {
             return;
         }
-        if (MAX_NUMBER_OF_WINNERS_IN_HISTORY >= state.winners.capacity() - 1) {
+        if (RL_MAX_NUMBER_OF_WINNERS_IN_HISTORY >= state.winners.capacity() - 1) {
             state.winnersInfoNextEmptyIndex = 0;
         }
         locals.winnerInfo.winnerAddress = input.winnerAddress;
@@ -419,11 +425,11 @@ private:
         }
 
         locals.randomNum = mod<uint64>(qpi.K12(qpi.getPrevSpectrumDigest()).u64._0, state.players.population());
-        for (sint64 i = 0, j = 0; i < state.players.capacity(); ++i) {
-            if (!state.players.isEmptySlot(i)) {
-                if (j++ == locals.randomNum) {
-                    output.winnerAddress = state.players.key(i);
-                    output.index = i;
+        for (locals.i = 0, locals.j = 0; locals.i < state.players.capacity(); ++locals.i) {
+            if (!state.players.isEmptySlot(locals.i)) {
+                if (locals.j++ == locals.randomNum) {
+                    output.winnerAddress = state.players.key(locals.i);
+                    output.index = locals.i;
                     break;
                 }
             }
@@ -475,15 +481,15 @@ protected:
 
     /**
      * @brief Set of players participating in the current lottery epoch.
-     * Maximum capacity is defined by MAX_NUMBER_OF_PLAYERS.
+     * Maximum capacity is defined by RL_MAX_NUMBER_OF_PLAYERS.
      */
-    HashSet<id, MAX_NUMBER_OF_PLAYERS> players = {};
+    HashSet<id, RL_MAX_NUMBER_OF_PLAYERS> players = {};
 
     /**
      * @brief Circular buffer storing the history of winners.
-     * Maximum capacity is defined by MAX_NUMBER_OF_WINNERS_IN_HISTORY.
+     * Maximum capacity is defined by RL_MAX_NUMBER_OF_WINNERS_IN_HISTORY.
      */
-    Array<WinnerInfo, MAX_NUMBER_OF_WINNERS_IN_HISTORY> winners = {};
+    Array<WinnerInfo, RL_MAX_NUMBER_OF_WINNERS_IN_HISTORY> winners = {};
 
     /**
      * @brief Index pointing to the next empty slot in the winners array.
