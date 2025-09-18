@@ -73,11 +73,8 @@ constexpr uint16 RL_MAX_NUMBER_OF_WINNERS_IN_HISTORY = 1024;
  *  If clang reports 'ID' undeclared here, include the QPI identity / address utilities first.
  */
 static const id RL_DEV_ADDRESS = ID(_Z, _T, _Z, _E, _A, _Q, _G, _U, _P, _I, _K, _T, _X, _F, _Y, _X, _Y, _E, _I, _T, _L,
-                                    _A,
-                                    _K, _F, _T, _D, _X, _C, _R, _L, _W, _E, _T, _H, _N, _G, _H, _D, _Y, _U, _W, _E, _Y,
-                                    _Q,
-                                    _N, _Q, _S, _R, _H, _O, _W, _M, _U, _J, _L, _E, _U, _E, _J, _J);
-
+                                    _A, _K, _F, _T, _D, _X, _C, _R, _L, _W, _E, _T, _H, _N, _G, _H, _D, _Y, _U, _W, _E,
+                                    _Y, _Q, _N, _Q, _S, _R, _H, _O, _W, _M, _U, _J, _L, _E);
 /// Owner address (currently identical to developer address; can be split in future revisions).
 static const id RL_OWNER_ADDRESS = RL_DEV_ADDRESS;
 
@@ -273,6 +270,8 @@ public:
     END_EPOCH_WITH_LOCALS() {
         state.currentState = EState::LOCKED;
 
+        state.players.cleanup();
+
         // Single-player edge case: refund instead of drawing.
         if (state.players.population() == 1) {
             for (locals.i = 0; locals.i < state.players.capacity(); ++locals.i) {
@@ -311,8 +310,7 @@ public:
                 }
 
                 // Burn remainder
-                if (locals.burnedAmount > 0)
-                {
+                if (locals.burnedAmount > 0) {
                     qpi.burn(locals.burnedAmount);
                 }
 
@@ -343,16 +341,15 @@ public:
      */
     PUBLIC_FUNCTION_WITH_LOCALS(GetPlayers) {
         locals.arrayIndex = 0;
-        output.numberOfPlayers = state.players.population();
-        if (output.numberOfPlayers == 0) {
-            return;
-        }
+
         locals.i = 0;
         for (locals.i = 0; locals.i < state.players.capacity(); ++locals.i) {
             if (!state.players.isEmptySlot(locals.i)) {
                 output.players.set(locals.arrayIndex++, state.players.key(locals.i));
             }
         }
+
+        output.numberOfPlayers = locals.arrayIndex;
     }
 
     /**
@@ -419,7 +416,9 @@ private:
     /**
      * @brief Internal: pseudo-random selection of a winner index using hardware RNG.
      */
-    PRIVATE_FUNCTION_WITH_LOCALS(GetWinner) {
+    PRIVATE_PROCEDURE_WITH_LOCALS(GetWinner) {
+        state.players.cleanup();
+
         if (state.players.population() == 0) {
             return;
         }
