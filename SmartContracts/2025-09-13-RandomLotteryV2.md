@@ -3,6 +3,12 @@
 **Author:** RandomLottery (RL) Team
 **Goal:** Enable more lottery formats without changing code.
 
+## Available Options
+
+> Option 0: no, don’t allow
+
+> Option 1: yes, allow
+
 ## Summary
 
 We propose four product changes to RL:
