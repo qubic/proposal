@@ -43,3 +43,8 @@ Together, these changes enable “premium,” “standard,” and “dynamic” 
 * **Premium:** higher ticket price, 1 draw, 1 winner — maximized single payout (e.g., every 3–4 epochs).
 * **Dynamic:** lower ticket price, 2–3 draws per epoch, **2–5 winners** in each — frequent wins and more happy players.
 * **Community Weeks:** temporary price reductions + more winners to attract new players.
+
+## Code change
+For detailled code changes see the pull request below:
+https://github.com/qubic/core/pull/586
+
