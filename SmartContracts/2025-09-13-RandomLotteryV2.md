@@ -48,3 +48,6 @@ Together, these changes enable “premium,” “standard,” and “dynamic” 
 For detailled code changes see the pull request below:
 https://github.com/qubic/core/pull/586
 
+## Migration tool
+https://github.com/N-010/convert-rl-state
+
