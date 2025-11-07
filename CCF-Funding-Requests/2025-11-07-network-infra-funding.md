@@ -7,6 +7,7 @@ Send **18 Billion Qubic** (~18,000 USD at $1,000 per billion)) to the address `Q
 
 > Option 1: Yes, send 18 Billion Qubic to fund Lite+Bob global deployment
 
+The machine will be operated by @feiyu and @dkat, monitored by QCT
 
 ## **Overview**
 We have successfully completed and stabilized the implementation of **Lite Nodes** and the **Bob MVP**. Both have operated reliably for **two consecutive epochs**, confirming their readiness for global deployment.  
