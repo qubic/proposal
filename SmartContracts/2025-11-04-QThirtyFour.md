@@ -1,4 +1,4 @@
-# QThirtyFour (QTF) Technical Specification
+# QThirtyFour (QTF)
 
 ## Contract Overview
 
@@ -628,6 +628,7 @@ This drives the FR extra redirect calculation.
 ---
 
 ## 10. Code
+
 [QThirtyFour](https://github.com/N-010/core/blob/feature/2025-11-04-QThirtyFour/src/contracts/QThirtyFour.h)
 
 [QReservePool](https://github.com/N-010/core/blob/feature/2025-11-04-QThirtyFour/src/contracts/QReservePool.h)
