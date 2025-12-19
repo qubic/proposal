@@ -15,8 +15,8 @@
 
 ## Table of Contents
 
-1. [Introduction](#introduction)
-2. [Game Mechanics](#game-mechanics)
+1. [Introduction](#1-introduction)
+2. [Game Mechanics](#2-game-mechanics)
 3. [Revenue Distribution](#revenue-distribution)
 4. [Prize Pool Structure](#prize-pool-structure)
 5. [Fast-Recovery System](#fast-recovery-system)
@@ -24,6 +24,7 @@
 7. [Settlement Process](#settlement-process)
 8. [Security Features](#security-features)
 9. [Configuration Parameters](#configuration-parameters)
+10. [Code](#9-code)
 
 ---
 
@@ -647,4 +648,9 @@ This drives the FR extra redirect calculation.
 | **Tick** | Qubic block (~1 second) |
 | **Winners Block** | Revenue portion allocated to prizes (68%) |
 
+---
+
+## [9. Code]
+[QThirtyFour](https://github.com/N-010/core/blob/feature/2025-11-04-QThirtyFour/src/contracts/QThirtyFour.h)
+[QReservePool](https://github.com/N-010/core/blob/feature/2025-11-04-QThirtyFour/src/contracts/QReservePool.h)
 ---
