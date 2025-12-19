@@ -8,6 +8,11 @@
 **Version:** 1.0
 **Status:** Development/Testing
 
+## Available Options
+> Option 0: no, dont allow
+
+> Option 1: yes, allow
+
 ## Table of Contents
 
 1. [Introduction](#introduction)
