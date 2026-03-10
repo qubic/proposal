@@ -198,6 +198,10 @@ Important rule:
 Therefore, the remaining categories must **always sum to 97%**.
 
 ---
+## Implementation
+
+Pull Request:  
+https://github.com/qubic/core/pull/365
 
 ## Updated Smart Contract Code
 
@@ -3229,7 +3233,7 @@ public:
     INITIALIZE()
     {
         state.QCAP_ISSUER = ID(_Q, _C, _A, _P, _W, _M, _Y, _R, _S, _H, _L, _B, _J, _H, _S, _T, _T, _Z, _Q, _V, _C, _I, _B, _A, _R, _V, _O, _A, _S, _K, _D, _E, _N, _A, _S, _A, _K, _N, _O, _B, _R, _G, _P, _F, _W, _W, _K, _R, _C, _U, _V, _U, _A, _X, _Y, _E);
-        state.qcapSoldAmount = 3130507;
+        state.qcapSoldAmount = 3230507;
         state.transferRightsFee = 100;
         state.quorumPercent = 670;
         state.qcapBurnPermille = 0;
