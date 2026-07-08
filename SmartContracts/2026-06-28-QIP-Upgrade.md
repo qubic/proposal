@@ -2,7 +2,7 @@
 
 **Proposer:** NINEISTEN
 
-**Date:** June 27, 2026
+**Date:** July 8, 2026
 
 ## Voting Options
 - **Option 1**: **Approve the QIP upgrades**
