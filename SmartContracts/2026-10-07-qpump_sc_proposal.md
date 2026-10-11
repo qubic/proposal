@@ -19,7 +19,8 @@ Qpump is a bonding-curve token launchpad for Qubic. It lets anyone create a toke
 - **Qswap gets a new pool** per graduated token, seeded at the curve's final price with liquidity locked permanently
 - **No admin.** No pause, no fee setter, no withdrawal, no upgrade path — every parameter, including every fee destination, is a compile-time constant
 - **No creator allocation**, no presale, no team supply. Creators buy in the opening batch at the same price as everyone else
-- **Revenue:** 60% of trade fees and 20,000,000 QU of each launch fee go to shareholders, paid every epoch
+- **QX shareholders earn from every trade.** 34% of each trade fee is transferred to the QX contract, which pays it out to QX shareholders
+- **Revenue:** 20,000,000 QU of each launch fee goes to Qpump shareholders, paid every epoch
 
 ---
 
@@ -59,14 +60,14 @@ The Qswap LP position belongs to the contract, which has no withdraw path. Liqui
 
 | Source | Split |
 |---|---|
-| Launch, 25,000,000 QU | 20,000,000 QU shareholders, 5,000,000 QU burned into the execution reserve |
-| Trade, 1% with a 1,000 QU floor | 34% shareholders, 33% buys QDOGE on Qswap, 33% to the QTREAT contract's dividend fund |
+| Launch, 25,000,000 QU | 20,000,000 QU Qpump shareholders, 5,000,000 QU burned into the execution reserve |
+| Trade, 1% with a 1,000 QU floor | 34% to the QX contract, 33% buys QDOGE on Qswap, 33% to the QTREAT contract's dividend fund |
 | Internal transfer, 100 QU flat | Burned |
 | Graduation, from the raise | 50,000,000 QU creator reward, 10,000,000 QU donated to charity |
 
 Fees are charged on top of the curve price and never taken out of the curve itself, so a holder's refund claim is never diluted by fees. The 1,000 QU figure is a floor on the fee, not a minimum trade: any amount can be bought, sold or transferred.
 
-Burns go into the contract's own execution reserve, which keeps it funded without external top-ups. The QDOGE share is spent in a single Qswap purchase once per epoch and remains in the contract, which has no way to move it. The QTREAT share is transferred to the QTREAT contract each epoch, where its own POST_INCOMING_TRANSFER books it into that contract's dividend fund. The shareholder share is taken as the remainder, so rounding dust accrues to shareholders rather than being lost.
+Burns go into the contract's own execution reserve, which keeps it funded without external top-ups. The QDOGE share is spent in a single Qswap purchase once per epoch and remains in the contract, which has no way to move it. The QX and QTREAT shares are transferred to those contracts each epoch; each one's POST_INCOMING_TRANSFER books the incoming qpiTransfer into its own revenue — QX into the earned amount it pays to QX shareholders, QTREAT into its dividend fund — so neither needs a cross-contract call. Trade fees do not pay Qpump's own shareholders; they are paid from the launch fee. The QX share is taken as the remainder, so rounding dust accrues to QX shareholders rather than being lost.
 
 Each graduation donates 10,000,000 QU to a charity identity fixed in the source (`DPQRLSZSSCXIYFIQGBFBXXISDDEBEGQNWNTQUEIFSCUWGHVXJPLFGMYDONIM`). It is a compile-time constant like every other destination, so no key can redirect it, and it is paid only from what remains after the holder delivery budget is reserved.
 
@@ -140,9 +141,9 @@ using namespace QPI;
 // Balances are internal until graduation issues the real asset.
 // No admin, no pause. Fees and limits are constants below.
 //
-// The trade fee splits 34 percent to shareholders, 33 percent into a QDOGE
-// buyback the contract keeps for good, and 33 percent to the QTREAT
-// contract's dividend fund. The graduation donation goes to a fixed charity
+// The trade fee splits 34 percent to the QX contract, which pays it out to
+// QX shareholders, 33 percent into a QDOGE buyback the contract keeps for
+// good, and 33 percent to the QTREAT contract's dividend fund. The graduation donation goes to a fixed charity
 // identity. All three destinations are compile-time constants, so no key
 // can redirect them.
 
@@ -179,7 +180,7 @@ constexpr uint64 QPUMP_BPS = 10000ULL;
 constexpr uint64 QPUMP_TRADE_FEE_BPS = 100ULL;                // 1 percent
 constexpr uint64 QPUMP_FEE_QDOGE_SHARE_BPS = 3300ULL;         // 33 percent buys QDOGE, locked for good
 constexpr uint64 QPUMP_FEE_QTREAT_SHARE_BPS = 3300ULL;        // 33 percent to the QTREAT contract's dividend fund
-constexpr uint64 QPUMP_FEE_SHAREHOLDER_SHARE_BPS = 3400ULL;   // 34 percent; taken as the remainder, so rounding dust lands here
+constexpr uint64 QPUMP_FEE_QX_SHARE_BPS = 3400ULL;            // 34 percent to the QX contract; taken as the remainder, so rounding dust lands here
 constexpr sint64 QPUMP_QSWAP_LIQUIDITY_FEE = 100000LL;        // flat Qswap fee on AddLiquidity
 constexpr sint64 QPUMP_DEFAULT_QX_ISSUANCE_FEE = 1000000000LL;
 constexpr sint64 QPUMP_DEFAULT_QX_TRANSFER_FEE = 100LL;
@@ -271,7 +272,7 @@ static_assert(QPUMP_COST_LINEAR == 2ULL * 710000000ULL * QPUMP_START_PRICE_MILLI
 static_assert(QPUMP_COST_SLOPE == QPUMP_END_PRICE_MILLI - QPUMP_START_PRICE_MILLI);
 static_assert(QPUMP_COST_DENOMINATOR == 2ULL * 710000000ULL * QPUMP_MILLI);
 static_assert(QPUMP_OPENING_TOKEN_CAP * 4 == QPUMP_CURVE_SUPPLY);
-static_assert(QPUMP_FEE_QDOGE_SHARE_BPS + QPUMP_FEE_QTREAT_SHARE_BPS + QPUMP_FEE_SHAREHOLDER_SHARE_BPS == QPUMP_BPS);
+static_assert(QPUMP_FEE_QDOGE_SHARE_BPS + QPUMP_FEE_QTREAT_SHARE_BPS + QPUMP_FEE_QX_SHARE_BPS == QPUMP_BPS);
 static_assert(QPUMP_LAUNCH_FEE_BURN <= QPUMP_LAUNCH_FEE);
 static_assert((QPUMP_MAX_COINS & (QPUMP_MAX_COINS - 1)) == 0);
 static_assert((QPUMP_NAME_CAPACITY & (QPUMP_NAME_CAPACITY - 1)) == 0);
@@ -407,6 +408,7 @@ struct QPUMP : public ContractBase
         sint64 burnPot;
         sint64 qdogePot;
         sint64 qtreatPot;
+        sint64 qxPot;
         sint64 totalQuToQdoge;
         sint64 totalQdogeBought;
         sint64 cachedQxIssuanceFee;
@@ -419,6 +421,7 @@ struct QPUMP : public ContractBase
         sint64 totalDividends;
         sint64 totalBurned;
         sint64 totalToQtreat;
+        sint64 totalToQx;
         sint64 totalDonated;
     };
 
@@ -987,7 +990,7 @@ struct QPUMP : public ContractBase
         sint64 graduationDonation;
         sint64 minTradeFee;
         uint64 tradeFeeBps;
-        uint64 feeShareholderShareBps;
+        uint64 feeQxShareBps;
         uint64 feeQdogeShareBps;
         uint64 feeQtreatShareBps;
         sint64 qxIssuanceFee;
@@ -1048,12 +1051,14 @@ struct QPUMP : public ContractBase
         sint64 burnPot;
         sint64 qdogePot;
         sint64 qtreatPot;
+        sint64 qxPot;
         sint64 totalQuToQdoge;
         sint64 totalQdogeBought;
         sint64 feeReserve;
         sint64 totalDividends;
         sint64 totalBurned;
         sint64 totalToQtreat;
+        sint64 totalToQx;
         sint64 totalDonated;
         uint64 wallets;
         uint32 liveCoins;
@@ -1675,7 +1680,7 @@ struct QPUMP : public ContractBase
         locals.qtreat = static_cast<sint64>(div(static_cast<uint64>(input.fee) * QPUMP_FEE_QTREAT_SHARE_BPS, QPUMP_BPS));
         state.mut().qdogePot += locals.qdoge;
         state.mut().qtreatPot += locals.qtreat;
-        state.mut().shareholderPot += input.fee - locals.qdoge - locals.qtreat;
+        state.mut().qxPot += input.fee - locals.qdoge - locals.qtreat;
     }
 
     // Puts a holder entry at the head of its list.
@@ -2755,7 +2760,7 @@ struct QPUMP : public ContractBase
         output.graduationDonation = QPUMP_GRADUATION_DONATION;
         output.minTradeFee = QPUMP_MIN_TRADE_FEE;
         output.tradeFeeBps = QPUMP_TRADE_FEE_BPS;
-        output.feeShareholderShareBps = QPUMP_FEE_SHAREHOLDER_SHARE_BPS;
+        output.feeQxShareBps = QPUMP_FEE_QX_SHARE_BPS;
         output.feeQdogeShareBps = QPUMP_FEE_QDOGE_SHARE_BPS;
         output.feeQtreatShareBps = QPUMP_FEE_QTREAT_SHARE_BPS;
         output.qxIssuanceFee = state.get().cachedQxIssuanceFee;
@@ -2827,7 +2832,9 @@ struct QPUMP : public ContractBase
         output.totalDonated = state.get().totalDonated;
         output.qdogePot = state.get().qdogePot;
         output.qtreatPot = state.get().qtreatPot;
+        output.qxPot = state.get().qxPot;
         output.totalToQtreat = state.get().totalToQtreat;
+        output.totalToQx = state.get().totalToQx;
         output.totalQuToQdoge = state.get().totalQuToQdoge;
         output.totalQdogeBought = state.get().totalQdogeBought;
         output.wallets = state.get().walletIds.population();
@@ -3838,6 +3845,17 @@ struct QPUMP : public ContractBase
             {
                 state.mut().totalToQtreat += state.get().qtreatPot;
                 state.mut().qtreatPot = 0;
+            }
+        }
+        // QX's POST_INCOMING_TRANSFER books a qpiTransfer into its earned
+        // amount, which it pays out to QX shareholders itself, so this needs no
+        // call into that contract either.
+        if (state.get().qxPot > 0)
+        {
+            if (qpi.transfer(id(QX_CONTRACT_INDEX, 0, 0, 0), state.get().qxPot) >= 0)
+            {
+                state.mut().totalToQx += state.get().qxPot;
+                state.mut().qxPot = 0;
             }
         }
         if (state.get().burnPot > 0)
