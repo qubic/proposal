@@ -63,9 +63,12 @@ The Qswap LP position belongs to the contract, which has no withdraw path. Liqui
 | Launch, 25,000,000 QU | 20,000,000 QU Qpump shareholders, 5,000,000 QU burned into the execution reserve |
 | Trade, 1% with a 1,000 QU floor | 34% to the QX contract, 33% buys QDOGE on Qswap, 33% to the QTREAT contract's dividend fund |
 | Internal transfer, 100 QU flat | Burned |
+| Internal transfer that creates a holder position, 1,000 QU extra | Into that coin's own raise, funding the delivery budget the new position reserves |
 | Graduation, from the raise | 50,000,000 QU creator reward, 10,000,000 QU donated to charity |
 
 Fees are charged on top of the curve price and never taken out of the curve itself, so a holder's refund claim is never diluted by fees. The 1,000 QU figure is a floor on the fee, not a minimum trade: any amount can be bought, sold or transferred.
+
+A transfer to an identity with no position in that coin creates a permanent entry in the shared holder and wallet tables, and that entry reserves twice the QX transfer fee out of the coin's raise as delivery budget. Charging only the flat 100 QU let a sender consume shared capacity and 200 QU of someone else's pool seed for less than it cost. Such a transfer therefore pays 1,000 QU on top, the same price as the cheapest position the curve can create, and that 1,000 QU is added to the coin's own raise rather than burned, so the sender funds the budget their entry reserves instead of diluting the pool. A transfer into an existing position still costs the flat 100 QU.
 
 Burns go into the contract's own execution reserve, which keeps it funded without external top-ups. The QDOGE share is spent in a single Qswap purchase once per epoch and remains in the contract, which has no way to move it. The QX and QTREAT shares are transferred to those contracts each epoch; each one's POST_INCOMING_TRANSFER books the incoming qpiTransfer into its own revenue — QX into the earned amount it pays to QX shareholders, QTREAT into its dividend fund — so neither needs a cross-contract call. Trade fees do not pay Qpump's own shareholders; they are paid from the launch fee. The QX share is taken as the remainder, so rounding dust accrues to QX shareholders rather than being lost.
 
@@ -79,10 +82,11 @@ Each graduation donates 10,000,000 QU to a charity identity fixed in the source 
 - **Solvency.** A sell is paid only from the QU that token's buyers put in, checked before payout, so every holder can always exit
 - **Dead tokens refund** rather than trapping holders
 - **Only wallets may trade.** Buy, sell, transfer and create reject contract callers
+- **Idle ticks write no state.** The per-tick sweep keeps no cursor in state, so a tick that finds nothing to do leaves the state clean and costs no state digest
 
 ## Capacity
 
-Contract state is 238,502,104 bytes, about 24% of the 1 GB limit, sized up front so no migration is needed as usage grows: 32,768 live coins, 65,536 permanent graduated records, 4,194,304 holder positions, 1,048,576 wallets, 10 live coins per creator at a time. Wallets receive a compact id on first use, and each coin's holders form a linked list, so a payout visits only that coin's holders regardless of table size.
+Contract state is 238,502,144 bytes, about 24% of the 1 GB limit, sized up front so no migration is needed as usage grows: 32,768 live coins, 65,536 permanent graduated records, 4,194,304 holder positions, 1,048,576 wallets, 10 live coins per creator at a time. Wallets receive a compact id on first use, and each coin's holders form a linked list, so a payout visits only that coin's holders regardless of table size.
 
 ---
 
@@ -141,11 +145,12 @@ using namespace QPI;
 // Balances are internal until graduation issues the real asset.
 // No admin, no pause. Fees and limits are constants below.
 //
-// The trade fee splits 34 percent to the QX contract, which pays it out to
-// QX shareholders, 33 percent into a QDOGE buyback the contract keeps for
-// good, and 33 percent to the QTREAT contract's dividend fund. The graduation donation goes to a fixed charity
-// identity. All three destinations are compile-time constants, so no key
-// can redirect them.
+// The trade fee splits 34 percent to QX's shareholders, 33 percent into a
+// QDOGE buyback the contract keeps for good, and 33 percent into QTREAT's
+// dividend fund - none of it stays with this contract's own shareholders,
+// who are paid out of the launch fee instead. The graduation donation goes
+// to a fixed charity identity. Every destination is a compile-time
+// constant, so no key can redirect them.
 
 // ---- Curve ----
 constexpr sint64 QPUMP_CURVE_SUPPLY = 710000000LL;            // tokens sold on the curve
@@ -175,12 +180,20 @@ constexpr sint64 QPUMP_LAUNCH_FEE_BURN = 5000000LL;           // the rest goes t
 constexpr sint64 QPUMP_GRADUATION_REWARD = 50000000LL;        // paid to the creator from the raise
 constexpr sint64 QPUMP_GRADUATION_DONATION = 10000000LL;      // donated to charity from the raise at graduation
 constexpr sint64 QPUMP_TRANSFER_FEE = 100LL;                  // flat fee per internal transfer, burned
+// Charged on top when a transfer creates a holder entry for a recipient that had
+// none. A new entry takes a slot in the shared holders and walletIds maps and
+// reserves cachedQxTransferFee * QPUMP_DELIVERY_BUDGET_FACTOR of the coin's raise
+// as delivery budget, so at the bare QPUMP_TRANSFER_FEE the sender paid 100 QU to
+// consume shared capacity and 200 QU of someone else's pool seed. This prices a
+// transfer-created position like the cheapest curve-created one and pays the
+// budget into the coin instead of diluting it.
+constexpr sint64 QPUMP_NEW_POSITION_FEE = 1000LL;
 constexpr sint64 QPUMP_MIN_TRADE_FEE = 1000LL;
 constexpr uint64 QPUMP_BPS = 10000ULL;
 constexpr uint64 QPUMP_TRADE_FEE_BPS = 100ULL;                // 1 percent
 constexpr uint64 QPUMP_FEE_QDOGE_SHARE_BPS = 3300ULL;         // 33 percent buys QDOGE, locked for good
-constexpr uint64 QPUMP_FEE_QTREAT_SHARE_BPS = 3300ULL;        // 33 percent to the QTREAT contract's dividend fund
-constexpr uint64 QPUMP_FEE_QX_SHARE_BPS = 3400ULL;            // 34 percent to the QX contract; taken as the remainder, so rounding dust lands here
+constexpr uint64 QPUMP_FEE_QTREAT_SHARE_BPS = 3300ULL;        // 33 percent into QTREAT's dividend fund
+constexpr uint64 QPUMP_FEE_QX_SHARE_BPS = 3400ULL;            // 34 percent to QX's shareholders; taken as the remainder, so rounding dust lands here
 constexpr sint64 QPUMP_QSWAP_LIQUIDITY_FEE = 100000LL;        // flat Qswap fee on AddLiquidity
 constexpr sint64 QPUMP_DEFAULT_QX_ISSUANCE_FEE = 1000000000LL;
 constexpr sint64 QPUMP_DEFAULT_QX_TRANSFER_FEE = 100LL;
@@ -401,13 +414,15 @@ struct QPUMP : public ContractBase
         uint32 liveCoins;
         uint32 freeSlotCount;
         uint32 nextFreshSlot;
-        uint32 sweepCursor;
+        uint32 sweepResume;
         uint32 graduatedCount;
         uint32 activePayoutSlot;
+        // Launch fees, paid out to this contract's own shares as dividends.
         sint64 shareholderPot;
         sint64 burnPot;
         sint64 qdogePot;
         sint64 qtreatPot;
+        // The trade fee's 34 percent, forwarded to the QX contract.
         sint64 qxPot;
         sint64 totalQuToQdoge;
         sint64 totalQdogeBought;
@@ -1292,6 +1307,7 @@ struct QPUMP : public ContractBase
         Coin coin;
         uint64 fromKey;
         uint64 toKey;
+        sint64 charged;
         HolderEntry fromEntry;
         HolderEntry toEntry;
         FindWallet_input walletIn;
@@ -2832,8 +2848,8 @@ struct QPUMP : public ContractBase
         output.totalDonated = state.get().totalDonated;
         output.qdogePot = state.get().qdogePot;
         output.qtreatPot = state.get().qtreatPot;
-        output.qxPot = state.get().qxPot;
         output.totalToQtreat = state.get().totalToQtreat;
+        output.qxPot = state.get().qxPot;
         output.totalToQx = state.get().totalToQx;
         output.totalQuToQdoge = state.get().totalQuToQdoge;
         output.totalQdogeBought = state.get().totalQdogeBought;
@@ -3534,6 +3550,12 @@ struct QPUMP : public ContractBase
             locals.toKey = locals.keyOut.key;
             locals.toFound = state.get().holders.get(locals.toKey, locals.toEntry);
         }
+        if (!locals.toFound && qpi.invocationReward() < QPUMP_TRANSFER_FEE + QPUMP_NEW_POSITION_FEE)
+        {
+            qpi.transfer(qpi.invocator(), qpi.invocationReward());
+            output.returnCode = QPUMP_ERR_INSUFFICIENT_REWARD;
+            return;
+        }
         if (!locals.toFound)
         {
             if (state.get().holders.population() >= QPUMP_HOLDER_LOAD_LIMIT)
@@ -3606,13 +3628,21 @@ struct QPUMP : public ContractBase
             locals.linkIn.key = locals.toKey;
             CALL(LinkHolder, locals.linkIn, locals.linkOut);
         }
+        locals.charged = QPUMP_TRANSFER_FEE;
+        if (!locals.toFound)
+        {
+            // Pays the delivery budget the new entry reserves, rather than
+            // taking it out of the pool seed at graduation.
+            locals.charged += QPUMP_NEW_POSITION_FEE;
+            locals.coin.realQu += QPUMP_NEW_POSITION_FEE;
+        }
         state.mut().coins.set(locals.findOut.slot, locals.coin);
         state.mut().burnPot += QPUMP_TRANSFER_FEE;
-        if (qpi.invocationReward() > QPUMP_TRANSFER_FEE)
+        if (qpi.invocationReward() > locals.charged)
         {
-            qpi.transfer(qpi.invocator(), qpi.invocationReward() - QPUMP_TRANSFER_FEE);
+            qpi.transfer(qpi.invocator(), qpi.invocationReward() - locals.charged);
         }
-        output.fee = QPUMP_TRANSFER_FEE;
+        output.fee = locals.charged;
 
         locals.log._contractIndex = SELF_INDEX;
         locals.log._type = QPUMP_LOG_TRANSFER;
@@ -3654,6 +3684,7 @@ struct QPUMP : public ContractBase
     {
         state.mut().nextCoinId = 1;
         state.mut().activePayoutSlot = QPUMP_NO_SLOT;
+        state.mut().sweepResume = QPUMP_NO_SLOT;
         state.mut().cachedQxIssuanceFee = QPUMP_DEFAULT_QX_ISSUANCE_FEE;
         state.mut().cachedQxTransferFee = QPUMP_DEFAULT_QX_TRANSFER_FEE;
         state.mut().cachedQswapPoolFee = QPUMP_DEFAULT_QSWAP_POOL_FEE;
@@ -3775,16 +3806,38 @@ struct QPUMP : public ContractBase
         }
 
         // Lifecycle sweep over a rotating window of used slots.
+        //
+        // An idle tick must not write state at all: the node answers a dirty
+        // state by running KangarooTwelve over the whole of it (getComputerDigest
+        // in qubic.cpp), ~227 MB for this contract, so a bookkeeping write on
+        // every tick costs that hash for nothing. So there is no per-tick cursor;
+        // when nothing is pending the window start comes from the tick itself.
+        //
+        // But the per-tick work budget must not hand permanent priority to the
+        // lowest slot in a window either, or slots behind four busy ones (a coin
+        // whose graduation keeps failing, say) would never be reached. So when the
+        // budget stops the scan early, the resume point is stored - on a tick that
+        // already dirtied the state by doing that work - and the next tick carries
+        // on from there. sweepResume is cleared once a window drains, which is the
+        // only write this sweep makes on a tick that did nothing else.
         locals.scanned = 0;
         locals.work = 0;
-        while (locals.scanned < QPUMP_TICK_SLOT_SCAN && locals.scanned < state.get().nextFreshSlot && locals.work < QPUMP_TICK_COIN_WORK)
+        if (state.get().sweepResume != QPUMP_NO_SLOT)
         {
-            locals.slot = state.get().sweepCursor;
+            locals.slot = state.get().sweepResume;
+        }
+        else
+        {
+            locals.slot = static_cast<uint32>(mod(static_cast<uint64>(qpi.tick()) * static_cast<uint64>(QPUMP_TICK_SLOT_SCAN),
+                static_cast<uint64>(state.get().nextFreshSlot)));
+        }
+        while (locals.scanned < QPUMP_TICK_SLOT_SCAN && locals.scanned < state.get().nextFreshSlot
+            && locals.work < QPUMP_TICK_COIN_WORK)
+        {
             if (locals.slot >= state.get().nextFreshSlot)
             {
                 locals.slot = 0;
             }
-            state.mut().sweepCursor = locals.slot + 1;
             locals.scanned += 1;
             locals.coin = state.get().coins.get(locals.slot);
             if (locals.coin.status == QPUMP_STATUS_OPENING)
@@ -3820,6 +3873,19 @@ struct QPUMP : public ContractBase
             {
                 state.mut().activePayoutSlot = locals.slot;
             }
+            locals.slot += 1;
+        }
+        if (locals.work >= QPUMP_TICK_COIN_WORK)
+        {
+            if (locals.slot >= state.get().nextFreshSlot)
+            {
+                locals.slot = 0;
+            }
+            state.mut().sweepResume = locals.slot;
+        }
+        else if (state.get().sweepResume != QPUMP_NO_SLOT)
+        {
+            state.mut().sweepResume = QPUMP_NO_SLOT;
         }
     }
 
@@ -3836,26 +3902,41 @@ struct QPUMP : public ContractBase
                 state.mut().totalDividends += locals.perShare * NUMBER_OF_COMPUTORS;
             }
         }
-        // QTREAT's POST_INCOMING_TRANSFER books a qpiTransfer into its
-        // dividend fund, so this needs no call into that contract. Pooled per epoch
-        // rather than sent per trade, like every other share of the fee.
-        if (state.get().qtreatPot > 0)
-        {
-            if (qpi.transfer(id(QTREAT_CONTRACT_INDEX, 0, 0, 0), state.get().qtreatPot) >= 0)
-            {
-                state.mut().totalToQtreat += state.get().qtreatPot;
-                state.mut().qtreatPot = 0;
-            }
-        }
-        // QX's POST_INCOMING_TRANSFER books a qpiTransfer into its earned
-        // amount, which it pays out to QX shareholders itself, so this needs no
-        // call into that contract either.
+        // The trade fee's 34 percent belongs to QX's shareholders, not to this
+        // contract's: QX's POST_INCOMING_TRANSFER books a qpiTransfer into
+        // _earnedAmount and pays it out to them in its own END_TICK. Same
+        // caveat as the QTREAT deposit below - a bare transfer runs that
+        // callback, which would abort this procedure if QX were ever in an
+        // error state - but QX has been live since epoch 66 and Qswap and
+        // QUtil already route fees to it exactly this way.
         if (state.get().qxPot > 0)
         {
             if (qpi.transfer(id(QX_CONTRACT_INDEX, 0, 0, 0), state.get().qxPot) >= 0)
             {
                 state.mut().totalToQx += state.get().qxPot;
                 state.mut().qxPot = 0;
+            }
+        }
+        // Pooled per epoch rather than sent per trade, like every other share
+        // of the fee. QTREAT's POST_INCOMING_TRANSFER books a qpiTransfer into
+        // its dividend fund, so a plain transfer gets there. Its
+        // DepositDividends procedure would be the safer route, because a
+        // transfer runs that callback and the callback aborts the SENDER if
+        // QTREAT is ever in an error state - an abort inside END_EPOCH spins
+        // forever and stalls the network - but the contract verifier rejects
+        // QTREAT:: scope resolution, so the invoke is not available here. The
+        // weaker failure mode is bounded: QTREAT constructs in epoch 233 and
+        // Qpump in 235, so QTREAT can never merely be inactive by the time
+        // this runs, and this is the same exposure QBond, QThirtyFour and
+        // Qswap already carry when they transfer to another contract.
+        // END_EPOCH runs in descending contract index, so QTREAT (30)
+        // distributes this in the same epoch Qpump (31) deposits it.
+        if (state.get().qtreatPot > 0)
+        {
+            if (qpi.transfer(id(QTREAT_CONTRACT_INDEX, 0, 0, 0), state.get().qtreatPot) >= 0)
+            {
+                state.mut().totalToQtreat += state.get().qtreatPot;
+                state.mut().qtreatPot = 0;
             }
         }
         if (state.get().burnPot > 0)
