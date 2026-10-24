@@ -117,7 +117,7 @@ Deploying Qpump gives Qubic:
 - A launchpad category it currently lacks, at a price point where experimentation is viable
 - Recurring demand for QX issuances and Qswap pools, each fully paid, with permanently locked liquidity
 - A fair-launch design with no creator allocation, no presale and no admin control
-- Shareholder revenue from both launches and trading, distributed automatically each epoch
+- Revenue for QX shareholders from every Qpump trade, and for Qpump shareholders from every launch, distributed automatically each epoch
 - Refunds for holders of tokens that never take off, so no one is trapped
 
 ---
@@ -126,7 +126,9 @@ Deploying Qpump gives Qubic:
 
 **Developer:** [double-k-3033](https://github.com/double-k-3033)
 
-From: https://github.com/qubic/core/pull/1010 (commit `905e723ff47eb61c671f9429c93aa897cc206110`)
+From: https://github.com/qubic/core/pull/1010 (commit [`1a22270`](https://github.com/qubic/core/commit/1a222707f7e95f2c533acafa77ceebb4beb02ab5))
+
+The source below is byte-identical to `src/contracts/Qpump.h` at that commit.
 
 ```c++
 using namespace QPI;
