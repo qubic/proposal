@@ -63,7 +63,7 @@ The marathon starts on 25 November 2026, epoch 241, the first epoch where BPP-90
 
 The aim is simple: as many miners as possible on BPP-9000 in its first live weeks, so the network grows on real data from the first hour. Qubic Church announced it on X and will publish the instructions before the start.
 
-The 1,000 USD rents about 10 GPU rigs for four weeks. Miners currently quote 2.00 to 3.70 USD per rig per day for suitable rentals. The rigs mine BPP-9000 for the whole marathon, and their work is shown on qubic.church next to the record.
+The 1,000 USD rents about 10 GPU rigs for four weeks. Miners currently quote 2.00 to 3.70 USD per rig per day for suitable rentals. The rigs mine BPP-9000 for the whole marathon, and their work is shown on qubic.church next to the record. Mining rewards earned by the rented rigs go to the same public Qubic Church wallet and are listed, with the pools the rigs mined in, in the marathon report.
 
 We are also preparing a public pool with an open record of each miner's contribution. It will be announced separately when it is ready.
 
