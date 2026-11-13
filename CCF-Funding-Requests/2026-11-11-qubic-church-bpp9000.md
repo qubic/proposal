@@ -1,7 +1,7 @@
-# Proposal to Fund Qubic Church: BPP-9000 Public Tools and the Second Mining Marathon
+# Proposal to Fund Qubic Church: BPP-9000 Public Tools and the Qubic Church App
 
 ## Proposal
-Send **16.8 billion QUBIC** (about 6,000 USD at 358 USD per billion, 10 November 2026) to the address `BDRFCOFWHRTEHHMQQUIYJBXEOLNARADAGFUSBFGJFABYZBZLQNWJIPPFRTXO` to cover what a year of work on qubic.church has cost so far and fund its next stage, including rented rigs for the Second Mining Marathon starting 25 November.
+Send **16.8 billion QUBIC** (about 6,000 USD at 358 USD per billion, 10 November 2026) to the address `BDRFCOFWHRTEHHMQQUIYJBXEOLNARADAGFUSBFGJFABYZBZLQNWJIPPFRTXO` to cover what a year of work on qubic.church has cost so far and fund its next stage, including the Qubic Church app for Android and iOS.
 
 > Option 0: No
 
@@ -14,7 +14,7 @@ For a year, Qubic Church has been built and updated nearly every day: the concep
 
 BPP-9000 is the crown of that work. We prepared the site for its launch and built simple sign-up and record-keeping for participants: one key, a public journal for every handle, a live view of the network, a sealed record of its calls and Brain Watch.
 
-The community asked us in #price-discussion to file this request. We ask for 6,000 USD in total: 2,500 USD to cover what the year of work has cost so far, and 3,500 USD for the next stage of development, of which 1,000 USD rents mining rigs for the Second Mining Marathon.
+The community asked us in #price-discussion to file this request. We ask for 6,000 USD in total: 2,500 USD to cover what the year of work has cost so far, and 3,500 USD for the next stage of development: BPP-9000 updates and the Qubic Church app for Android and iOS.
 
 ## What We Built
 The site has four sections, an open forum, and a series of long reads on X. Everything is free to read, with no account needed.
@@ -53,33 +53,38 @@ The site is open about what is proven and what is not: BPP-9000 scores are prese
 | --- | --- | --- |
 | Already spent over the year: all kinds of work behind qubic.church, including a paid designer, crowned by the BPP-9000 tools | 2,500 | 7.0 |
 | Next stage: BPP-9000 updates for each new version (1,024 neurons from epoch 239), the sealed record on live data, Maria, the forum, the third book | 2,500 | 7.0 |
-| Rented rigs for the Second Mining Marathon | 1,000 | 2.8 |
+| The Qubic Church app for Android and iOS: development, store developer accounts, testing | 1,000 | 2.8 |
 | **Total** | **6,000** | **16.8** |
 
 These funds will not be sold on the open market. They stay in a public wallet shown on qubic.church, every spend is published there, and whatever is not spent is held until the community's 0.01 mark.
 
+## The Qubic Church App
+Most of the community reads Qubic news on a phone. The next stage turns qubic.church into an app for Android and iOS, free like the site:
+
+- A notification with every hourly BPP-9000 call and its result, and with every new epoch and network version.
+- The sealed record, Brain Watch and the network running live, in your pocket.
+- The books and the research readable offline.
+- Maria, our AI, one tap away.
+
+The app adds no wallet and no mining on the phone: it shows the network and its record, nothing to buy or sell. Android goes first, through a closed test with the community, then iOS after Apple's review.
+
 ## The Second Mining Marathon
-The marathon starts on 25 November 2026, epoch 241, the first epoch where BPP-9000 is expected to be scored on live bitcoin data (Come-from-Beyond on Discord: "Should be 25th, 18th is test-run").
-
-The aim is simple: as many miners as possible on BPP-9000 in its first live weeks, so the network grows on real data from the first hour. Qubic Church announced it on X and will publish the instructions before the start.
-
-The 1,000 USD rents about 10 GPU rigs for four weeks. Miners currently quote 2.00 to 3.70 USD per rig per day for suitable rentals. The rigs mine BPP-9000 for the whole marathon, and their work is shown on qubic.church next to the record. Mining rewards earned by the rented rigs go to the same public Qubic Church wallet and are listed, with the pools the rigs mined in, in the marathon report.
-
-We are also preparing a public pool with an open record of each miner's contribution. It will be announced separately when it is ready.
+The marathon starts on 25 November 2026, epoch 241, the first epoch where BPP-9000 is expected to be scored on live bitcoin data (Come-from-Beyond on Discord: "Should be 25th, 18th is test-run"). Qubic Church announced it on X and will publish the instructions before the start. The aim is simple: as many miners as possible on BPP-9000 in its first live weeks, so the network grows on real data from the first hour. This proposal does not fund it.
 
 ## Success Indicators
 - The BPP-9000 record seals every hourly call from the start of the live feed and publishes its accuracy, including the hours it got wrong.
 - The BPP-9000 pages show each new network version within one epoch of its release, starting with the 1,024-neuron change.
-- The rented rigs mine BPP-9000 for the whole marathon.
+- The Qubic Church app is in a public closed test on Android in December 2026, and on Google Play and the App Store after store review.
 - All tools stay free and open to everyone, and the wallet holding these funds is shown on qubic.church with every spend.
 
 ## Timeline
 1. 18 November: live feed test run; the record goes live.
-2. 25 November: Second Mining Marathon starts; rigs online from the first hour.
-3. Late December: marathon report.
-4. April 2027: report on the site and the funds.
+2. 25 November: Second Mining Marathon starts.
+3. December: the Android app in a closed test with the community; iOS submitted to Apple.
+4. Late December: first report.
+5. April 2027: report on the site, the app and the funds.
 
 ## Reporting
-We will post a public report in the Qubic Discord and on qubic.church after the marathon and again in April 2027. It will list the rented rigs with their receipts, the epochs they mined and the solutions they found.
+We will post a public report in the Qubic Discord and on qubic.church in late December 2026 and again in April 2027. It will list every spend with its receipt, the state of the app and the BPP-9000 record.
 
 The funds go to `BDRFCOFWHRTEHHMQQUIYJBXEOLNARADAGFUSBFGJFABYZBZLQNWJIPPFRTXO`, the public address of Qubic Church shown on qubic.church, held by Qubic Church (@QubicChurch on Discord and X).
