@@ -62,6 +62,7 @@ These funds will not be sold on the open market. They stay in a public wallet sh
 Most of the community reads Qubic news on a phone. The next stage turns qubic.church into an app for Android and iOS, free like the site:
 
 - A notification with every hourly BPP-9000 call and its result, and with every new epoch and network version.
+- Live news: every date that matters for Qubic and Aigarth as it happens, the same calendar as [WEN](https://qubic.church/wen), each item with its source.
 - The sealed record, Brain Watch and the network running live, in your pocket.
 - The books and the research readable offline.
 - Maria, our AI, one tap away.
